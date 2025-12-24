@@ -5,8 +5,12 @@ pipeline {
   stages {
     stage('Build Docker Image') {
       steps {
-        script{
-          dockerapp = docker.build('USER/guia-jenkins:${env.BUILD_ID}','-f .src/Dockerfile ./src' )
+        script {
+          // Use aspas duplas para interpolar e corrija o -f
+          dockerapp = docker.build(
+            "fabricio/guia-jenkins:${env.BUILD_NUMBER}",
+            "-f ./src/Dockerfile ./src"
+          )
         }
       }
     }
@@ -14,9 +18,11 @@ pipeline {
     stage('Push Docker Image') {
       steps {
         script {
-          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub'){
-          dockerapp.push('latest')
-          dockerapp.push("${env.BUILD_ID}")}
+          // Para Docker Hub, você pode usar endpoint vazio ('') com credentialsId 'dockerhub'
+          docker.withRegistry('', 'dockerhub') {
+            dockerapp.push('latest')
+            dockerapp.push("${env.BUILD_NUMBER}")
+          }
         }
       }
     }
