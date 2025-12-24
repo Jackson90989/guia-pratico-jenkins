@@ -19,7 +19,7 @@ pipeline {
       steps {
         script {
           // Para Docker Hub, você pode usar endpoint vazio ('') com credentialsId 'dockerhub'
-          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+          docker.withRegistry('', 'dockerhub') {
             dockerapp.push('latest')
             dockerapp.push("${env.BUILD_NUMBER}")
           }
