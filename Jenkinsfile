@@ -1,4 +1,4 @@
-# defino a pipeline
+
 pipeline {
     agent any
     stages {
