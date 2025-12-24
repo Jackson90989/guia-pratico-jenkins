@@ -8,7 +8,7 @@ pipeline {
         script {
           // Use aspas duplas para interpolar e corrija o -f
           dockerapp = docker.build(
-            "fabricio/guia-jenkins:${env.BUILD_NUMBER}",
+            "USER/guia-jenkins:${env.BUILD_NUMBER}",
             "-f ./src/Dockerfile ./src"
           )
         }
@@ -19,7 +19,7 @@ pipeline {
       steps {
         script {
           // Para Docker Hub, você pode usar endpoint vazio ('') com credentialsId 'dockerhub'
-          docker.withRegistry('', 'dockerhub') {
+          docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
             dockerapp.push('latest')
             dockerapp.push("${env.BUILD_NUMBER}")
           }
