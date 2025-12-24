@@ -8,7 +8,7 @@ pipeline {
         script {
           // Use aspas duplas para interpolar e corrija o -f
           dockerapp = docker.build(
-            "USER/guia-jenkins:${env.BUILD_NUMBER}",
+            "jackson/guia-jenkins:${env.BUILD_NUMBER}",
             "-f ./src/Dockerfile ./src"
           )
         }
